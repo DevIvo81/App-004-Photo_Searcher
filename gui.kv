@@ -1,0 +1,99 @@
+GridLayout:
+    cols: 1
+    ScreenManager:
+        id: screen_manager
+
+        Main:
+            name: "main"
+            id: main
+
+        Microscope:
+            name: "microscope"
+            id: microscope
+
+<Main>:
+    BoxLayout:
+
+        orientation:'vertical'
+
+
+        Label:
+            text: 'BLA BLA BLA BLA '
+            bold: True
+            color: [1,1,1,1]
+            size_hint: (1, None)
+            height: 100
+
+        GridLayout:
+            cols:2
+            size: root.width, root.height
+            padding: 10
+
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'CAMERA'
+                    bold: True
+                    color: [1,1,0,1]
+                    # size_hint: (1, None)
+                    # height: 160
+                ToggleButton:
+                    id: Cam
+                    text:'Play/Pause'
+                    on_press: cam.play = not cam.play
+                    size_hint: (1, None)
+                    height: 60
+
+
+            Cam:
+                id: cam
+                play: True
+                size_hint: (1, None)
+                height: 350     
+
+
+
+        BoxLayout:
+            orientation:'horizontal'      
+
+            Button:
+                text:"MICROSCOPIO"            
+                on_press:
+                    cam.play = False
+                    app.root.ids['screen_manager'].current = 'microscope'
+
+
+
+                size_hint: (1, None)
+                height: 70
+
+<Microscope>:
+    BoxLayout:
+        orientation:'horizontal'
+        # if i remove this cam it work in main screen
+        Cam:
+            id:cam
+            resolution: (640, 480)
+            play: False
+
+        Button:
+            text:'SALVAR IMAGEM'
+            #on_press: root.save()
+            size_hint:(1,None)
+            height: 70
+
+
+<Cam>:
+    resolution: (640,480)
+    play: False
+    keep_ratio: True
+    allow_stretch: True
+
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: root.center
+    canvas.after:
+        PopMatrix   

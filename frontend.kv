@@ -1,0 +1,16 @@
+#:kivy 2.1.0
+
+<CameraScreen>:
+    GridLayout:
+        cols: 1
+        Camera:
+            id: camera
+        Button:
+            text: 'Start Camera'
+        Button:
+            text: 'Capture'
+
+<RootWidget>:
+    CameraScreen:
+        id: camera_screen
+        name: 'camera_screen'
